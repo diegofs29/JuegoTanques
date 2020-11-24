@@ -7,7 +7,8 @@ GameLayer::GameLayer(Game* game)
 }
 
 void GameLayer::init() {
-	player = new Player(100, 100, 0, game);
+	player = new Player(100, 100, 90, game);
+	background = new Background("res/fondo.png", WIDTH * 0.5, HEIGHT * 0.5, game);
 }
 
 void GameLayer::keysToControls(SDL_Event event) {
@@ -15,16 +16,20 @@ void GameLayer::keysToControls(SDL_Event event) {
 		int code = event.key.keysym.sym;
 		switch (code) {
 		case SDLK_d: // derecha
-			controlRotate = 1;
+			if(controlMove == 0)
+				controlRotate = 1;
 			break;
 		case SDLK_a: // izquierda
-			controlRotate = -1;
+			if (controlMove == 0)
+				controlRotate = -1;
 			break;
 		case SDLK_w: // arriba
-			controlMove = -1;
+			if(controlRotate == 0)
+				controlMove = -1;
 			break;
 		case SDLK_s: // abajo
-			controlMove = 1;
+			if (controlRotate == 0)
+				controlMove = 1;
 			break;
 		case SDLK_SPACE: // dispara
 			controlShoot = true;
@@ -103,6 +108,7 @@ void GameLayer::update() {
 }
 
 void GameLayer::draw() {
+	background->draw();
 	player->draw();
 
 	SDL_RenderPresent(game->renderer); // Renderiza

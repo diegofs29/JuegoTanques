@@ -2,6 +2,7 @@
 
 #include "Layer.h"
 #include "Player.h"
+#include "Background.h"
 
 class GameLayer : public Layer
 {
@@ -13,6 +14,7 @@ public:
 	void draw() override;
 	void keysToControls(SDL_Event event);
 
+	Background* background;
 	Player* player;
 	bool controlShoot = false;
 	int controlMove = 0;

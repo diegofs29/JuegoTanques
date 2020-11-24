@@ -1,6 +1,6 @@
 #include "Actor.h"
 
-Actor::Actor(string filename, float x, float y, float angle, int width, int height, Game* game) {
+Actor::Actor(string filename, float x, float y, int width, int height, Game* game, float angle) {
 	this->game = game;
 	SDL_Surface* surface = IMG_Load(filename.c_str());
 	texture = SDL_CreateTextureFromSurface(game->renderer, surface);
@@ -32,5 +32,5 @@ void Actor::draw() {
 	// Modificar para que la referencia sea el punto central
 
 	SDL_RenderCopyEx(game->renderer,
-		texture, &source, &destination, 0, NULL, SDL_FLIP_NONE);
+		texture, &source, &destination, angle, NULL, SDL_FLIP_NONE);
 }

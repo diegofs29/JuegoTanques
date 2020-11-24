@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(float x, float y, float angle, Game* game)
-	: Actor("res/playerIdle.png", x, y, angle, 72, 80, game) {
+	: Actor("res/playerIdle.png", x, y, 72, 80, game, angle) {
 
 }
 
@@ -10,11 +10,18 @@ void Player::update() {
 	y = y + vy;
 }
 
-void Player::move(float axis) {
-	vx = axis * 3;
-	vy = axis * 3;
+void Player::move(int axis) {
+	float seno = sin(angle * (M_PI / 180)) * 15;
+	float coseno = cos(angle * (M_PI / 180)) * 15;
+	vx = -axis * seno;
+	vy = axis * coseno;
 }
 
 void Player::rotate(float angle) {
-	this->angle += angle;
+	if (this->angle == 0)
+		this->angle = 360 + angle;
+	else if (this->angle == 360)
+		this->angle = 0 + angle;
+	else
+		this->angle += angle;
 }
