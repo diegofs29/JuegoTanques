@@ -9,6 +9,8 @@ GameLayer::GameLayer(Game* game)
 void GameLayer::init() {
 	player = new Player(100, 100, 90, game);
 	background = new Background("res/fondo.png", WIDTH * 0.5, HEIGHT * 0.5, game);
+
+	projectiles.clear();
 }
 
 void GameLayer::keysToControls(SDL_Event event) {
@@ -75,7 +77,10 @@ void GameLayer::processControls() {
 	//procesar controles
 	// Disparar
 	if (controlShoot) {
-
+		Projectile* newProjectile = player->shoot();
+		if (newProjectile != NULL) {
+			projectiles.push_back(newProjectile);
+		}
 	}
 
 	// Mover
@@ -104,11 +109,17 @@ void GameLayer::processControls() {
 
 void GameLayer::update() {
 	player->update();
+	for (auto const& projectile : projectiles) {
+		projectile->update();
+	}
 	cout << "update GameLayer" << endl;
 }
 
 void GameLayer::draw() {
 	background->draw();
+	for (auto const& projectile : projectiles) {
+		projectile->draw();
+	}
 	player->draw();
 
 	SDL_RenderPresent(game->renderer); // Renderiza

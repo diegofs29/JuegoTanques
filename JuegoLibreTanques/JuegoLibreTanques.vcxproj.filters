@@ -45,8 +45,11 @@
     <ClCompile Include="Player.cpp">
       <Filter>Archivos de origen\Actores</Filter>
     </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Archivos de origen\Actores</Filter>
+    </ClCompile>
     <ClCompile Include="Background.cpp">
-      <Filter>Archivos de origen\Layers</Filter>
+      <Filter>Archivos de origen\Actores</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +69,9 @@
       <Filter>Archivos de encabezado\Actores</Filter>
     </ClInclude>
     <ClInclude Include="Background.h">
+      <Filter>Archivos de encabezado\Actores</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
       <Filter>Archivos de encabezado\Actores</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,6 +7,9 @@ Player::Player(float x, float y, float angle, Game* game)
 }
 
 void Player::update() {
+	if (shootTime > 0) {
+		shootTime--;
+	}
 	realX += vx;
 	realY += vy;
 	x = realX;
@@ -29,4 +32,14 @@ void Player::rotate(float angle) {
 		this->angle = 0 + angle;
 	else
 		this->angle += angle;
+}
+
+Projectile* Player::shoot() {
+	if (shootTime == 0) {
+		shootTime = shootCadence;
+		return new Projectile(x, y, angle, game);
+	}
+	else {
+		return NULL;
+	}
 }

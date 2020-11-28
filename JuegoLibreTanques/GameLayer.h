@@ -3,6 +3,9 @@
 #include "Layer.h"
 #include "Player.h"
 #include "Background.h"
+#include "Projectile.h"
+
+#include <list>
 
 class GameLayer : public Layer
 {
@@ -13,6 +16,8 @@ public:
 	void update() override;
 	void draw() override;
 	void keysToControls(SDL_Event event);
+	
+	list<Projectile*> projectiles;
 
 	Background* background;
 	Player* player;
