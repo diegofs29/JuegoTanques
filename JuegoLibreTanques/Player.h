@@ -9,5 +9,8 @@ public:
 	void update();
 	void move(int axis);
 	void rotate(float angle);
+
+	float realX;
+	float realY;
 };
 

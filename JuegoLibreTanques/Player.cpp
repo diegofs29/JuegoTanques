@@ -2,19 +2,24 @@
 
 Player::Player(float x, float y, float angle, Game* game)
 	: Actor("res/playerIdle.png", x, y, 72, 80, game, angle) {
-
+	realX = x;
+	realY = y;
 }
 
 void Player::update() {
-	x = x + vx;
-	y = y + vy;
+	realX += vx;
+	realY += vy;
+	x = realX;
+	y = realY;
 }
 
 void Player::move(int axis) {
-	float seno = sin(angle * (M_PI / 180)) * 15;
-	float coseno = cos(angle * (M_PI / 180)) * 15;
-	vx = -axis * seno;
-	vy = axis * coseno;
+	int vel = 7;
+
+	float seno = sin(angle * (M_PI / 180.0));
+	float coseno = cos(angle * (M_PI / 180.0));
+	vx = -axis * seno * vel;
+	vy = axis * coseno * vel;
 }
 
 void Player::rotate(float angle) {
