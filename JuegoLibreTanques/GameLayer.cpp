@@ -22,9 +22,16 @@ void GameLayer::init() {
 }
 
 void GameLayer::keysToControls(SDL_Event event) {
+	if (event.type == SDL_QUIT) {
+		game->loopActive = false;
+	}
+
 	if (event.type == SDL_KEYDOWN) {
 		int code = event.key.keysym.sym;
 		switch (code) {
+		case SDLK_ESCAPE:
+			game->loopActive = false;
+			break;
 		case SDLK_d: // derecha
 			if(controlMove == 0)
 				controlRotate = 1;
