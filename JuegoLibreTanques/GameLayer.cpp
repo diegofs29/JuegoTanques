@@ -7,10 +7,15 @@ GameLayer::GameLayer(Game* game)
 }
 
 void GameLayer::init() {
-	player = new Player(100, 100, 90, game);
+	barros.clear();
+	solidos.clear();
+	destruibles.clear();
+
 	background = new Background("res/fondo.png", WIDTH * 0.5, HEIGHT * 0.5, game);
 
 	projectiles.clear();
+
+	loadMap("res/1.txt");
 }
 
 void GameLayer::keysToControls(SDL_Event event) {
@@ -108,6 +113,65 @@ void GameLayer::processControls() {
 
 }
 
+void GameLayer::loadMap(string name) {
+	char character;
+	string line;
+	ifstream streamFile(name.c_str());
+	if (!streamFile.is_open()) {
+		cout << "Falla abrir el fichero de mapa" << endl;
+		return;
+	}
+	else {
+		// Por línea
+		for (int i = 0; getline(streamFile, line); i++) {
+			istringstream streamLine(line);
+			mapWidth = line.length() * 40; // Ancho del mapa en pixels
+			// Por carácter (en cada línea)
+			for (int j = 0; !streamLine.eof(); j++) {
+				streamLine >> character; // Leer character 
+				float x = 128 / 2 + j * 128; // x central
+				float y = 128 + i * 128; // y suelo
+				loadMapObject(character, x, y);
+			}
+		}
+	}
+	streamFile.close();
+}
+
+void GameLayer::loadMapObject(char character, float x, float y)
+{
+	switch (character) {
+	case 'P': {
+		player = new Player(x, y, 90, game);
+		// modificación para empezar a contar desde el suelo.
+		player->y = player->y - player->height / 2;
+		break;
+	}
+	case 'B': {
+		Tile* tile = new Tile("res/barro.png", x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		tile->y = tile->y - tile->height / 2;
+		barros.push_back(tile);
+		break;
+	}
+	case 'S': {
+		Tile* tile = new Tile("res/bloquesolido.png", x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		tile->y = tile->y - tile->height / 2;
+		solidos.push_back(tile);
+		break;
+	}
+	case 'D': {
+		Tile* tile = new Tile("res/bloqueagrietado.png", x, y, game);
+		// modificación para empezar a contar desde el suelo.
+		tile->y = tile->y - tile->height / 2;
+		destruibles.push_back(tile);
+		break;
+	}
+	}
+}
+
+
 void GameLayer::update() {
 	player->update();
 	for (auto const& projectile : projectiles) {
@@ -118,6 +182,15 @@ void GameLayer::update() {
 
 void GameLayer::draw() {
 	background->draw();
+	for (auto const& barro : barros) {
+		barro->draw();
+	}
+	for (auto const& solido : solidos) {
+		solido->draw();
+	}
+	for (auto const& destruible : destruibles) {
+		destruible->draw();
+	}
 	for (auto const& projectile : projectiles) {
 		projectile->draw();
 	}

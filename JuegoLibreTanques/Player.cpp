@@ -32,8 +32,6 @@ void Player::update() {
 		shootTime--;
 	}
 
-	cout << state << endl;
-
 	if (state == game->stateForward)
 		animation = aMovingForward;
 	else if (state == game->stateBackward)

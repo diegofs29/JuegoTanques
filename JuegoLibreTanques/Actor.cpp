@@ -30,9 +30,6 @@ void Actor::draw() {
 	destination.w = width;
 	destination.h = height;
 
-	cout << destination.x << endl;
-	// Modificar para que la referencia sea el punto central
-
 	SDL_RenderCopyEx(game->renderer,
 		texture, &source, &destination, angle, NULL, SDL_FLIP_NONE);
 }

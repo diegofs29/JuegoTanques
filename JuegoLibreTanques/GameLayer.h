@@ -4,8 +4,11 @@
 #include "Player.h"
 #include "Background.h"
 #include "Projectile.h"
+#include "Tile.h"
 
 #include <list>
+#include <fstream> // Leer ficheros
+#include <sstream> // Leer líneas / String
 
 class GameLayer : public Layer
 {
@@ -16,7 +19,14 @@ public:
 	void update() override;
 	void draw() override;
 	void keysToControls(SDL_Event event);
-	
+	void loadMap(string name);
+	void loadMapObject(char character, float x, float y);
+	int mapWidth;
+
+
+	list<Tile*> barros;
+	list<Tile*> solidos;
+	list<Tile*> destruibles;
 	list<Projectile*> projectiles;
 
 	Background* background;
