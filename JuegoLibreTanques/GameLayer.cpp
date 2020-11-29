@@ -34,7 +34,8 @@ void GameLayer::keysToControls(SDL_Event event) {
 				controlMove = 1;
 			break;
 		case SDLK_SPACE: // dispara
-			controlShoot = true;
+			if(controlMove == 0 && controlRotate == 0)
+				controlShoot = true;
 			break;
 		}
 	}
