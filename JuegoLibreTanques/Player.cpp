@@ -107,9 +107,9 @@ Projectile* Player::shoot() {
 	}
 }
 
-void Player::draw() {
+void Player::draw(float scrollX, float scrollY) {
 	if (state != game->stateIdle)
-		animation->draw(x, y, angle);
+		animation->draw(x - scrollX, y - scrollY, angle);
 	else
-		Actor::draw();
+		Actor::draw(scrollX, scrollY);
 }

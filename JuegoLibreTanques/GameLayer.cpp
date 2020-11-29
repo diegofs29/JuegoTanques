@@ -7,6 +7,9 @@ GameLayer::GameLayer(Game* game)
 }
 
 void GameLayer::init() {
+	scrollX = 0;
+	scrollY = 0;
+
 	barros.clear();
 	solidos.clear();
 	destruibles.clear();
@@ -114,6 +117,7 @@ void GameLayer::processControls() {
 }
 
 void GameLayer::loadMap(string name) {
+	int lineas = 0;
 	char character;
 	string line;
 	ifstream streamFile(name.c_str());
@@ -125,7 +129,7 @@ void GameLayer::loadMap(string name) {
 		// Por línea
 		for (int i = 0; getline(streamFile, line); i++) {
 			istringstream streamLine(line);
-			mapWidth = line.length() * 40; // Ancho del mapa en pixels
+			mapWidth = line.length() * 128; // Ancho del mapa en pixels
 			// Por carácter (en cada línea)
 			for (int j = 0; !streamLine.eof(); j++) {
 				streamLine >> character; // Leer character 
@@ -133,8 +137,10 @@ void GameLayer::loadMap(string name) {
 				float y = 128 + i * 128; // y suelo
 				loadMapObject(character, x, y);
 			}
+			lineas++;
 		}
 	}
+	mapHeight = lineas * 128;
 	streamFile.close();
 }
 
@@ -181,20 +187,46 @@ void GameLayer::update() {
 }
 
 void GameLayer::draw() {
+	calculateScroll();
+
 	background->draw();
 	for (auto const& barro : barros) {
-		barro->draw();
+		barro->draw(scrollX, scrollY);
 	}
 	for (auto const& solido : solidos) {
-		solido->draw();
+		solido->draw(scrollX, scrollY);
 	}
 	for (auto const& destruible : destruibles) {
-		destruible->draw();
+		destruible->draw(scrollX, scrollY);
 	}
 	for (auto const& projectile : projectiles) {
-		projectile->draw();
+		projectile->draw(scrollX, scrollY);
 	}
-	player->draw();
+	player->draw(scrollX, scrollY);
 
 	SDL_RenderPresent(game->renderer); // Renderiza
+}
+
+void GameLayer::calculateScroll() {
+	if (player->x > WIDTH * 0.3) {
+		if (player->x - scrollX < WIDTH * 0.3) {
+			scrollX = player->x - WIDTH * 0.3;
+		}
+	}
+	if (player->x < mapWidth - WIDTH * 0.3) {
+		if (player->x - scrollX > WIDTH * 0.7) {
+			scrollX = player->x - WIDTH * 0.7;
+		}
+	}
+	
+	if (player->y > HEIGHT * 0.3) {
+		if (player->y - scrollY < HEIGHT * 0.3) {
+			scrollY = player->y - HEIGHT * 0.3;
+		}
+	}
+	if (player->y < mapHeight - HEIGHT * 0.3) {
+		if (player->y - scrollY > HEIGHT * 0.7) {
+			scrollY = player->y - HEIGHT * 0.7;
+		}
+	}
 }

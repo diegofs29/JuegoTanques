@@ -6,7 +6,7 @@ class Actor
 {
 public:
 	Actor(string filename, float x, float y, int width, int height, Game* game, float angle = 0);
-	virtual void draw();
+	virtual void draw(float scrollX = 0, float scrollY = 0);
 
 	SDL_Texture* texture;
 	int x;

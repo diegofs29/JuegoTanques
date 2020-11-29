@@ -12,7 +12,7 @@ public:
 	void move(int axis);
 	void rotate(float angle);
 	Projectile* shoot();
-	void draw() override;
+	void draw(float scrollX = 0, float scrollY = 0) override;
 
 	float realX;
 	float realY;
