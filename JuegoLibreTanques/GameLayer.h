@@ -8,6 +8,7 @@
 #include "Space.h"
 #include "Mine.h"
 #include "Enemy.h"
+#include "NormalEnemy.h"
 
 #include <list>
 #include <fstream> // Leer ficheros

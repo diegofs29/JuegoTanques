@@ -203,9 +203,15 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		space->addStaticActor(tile);
 		break;
 	}
+	case 'N': {
+		Enemy* enemy = new NormalEnemy(x, y, 90, game);
+		enemy->y = enemy->y - player->height / 2;
+		space->addDynamicActor(enemy);
+		enemigos.push_back(enemy);
+		break;
+	}
 	}
 }
-
 
 void GameLayer::update() {
 	space->update();
@@ -240,7 +246,7 @@ void GameLayer::draw() {
 	}
 	player->draw(scrollX, scrollY);
 	for (auto const& enemigo : enemigos) {
-		enemigo->draw();
+		enemigo->draw(scrollX, scrollY);
 	}
 
 	SDL_RenderPresent(game->renderer); // Renderiza

@@ -18,6 +18,7 @@ void Space::updateMoveRight(Actor* dynamicAct) {
     if (dynamicAct->vx > 0) {
         float possibleMovement = dynamicAct->vx;
 
+        int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
         int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
         int topDynamic = dynamicAct->y - dynamicAct->height / 2;
         int downDynamic = dynamicAct->y + dynamicAct->height / 2;
@@ -40,10 +41,11 @@ void Space::updateMoveRight(Actor* dynamicAct) {
 
         for (auto const& slowingAct : slowingActors) {
             int leftSlowing = slowingAct->x - slowingAct->width / 2;
+            int rightSlowing = slowingAct->x + slowingAct->width / 2;
             int topSlowing = slowingAct->y - slowingAct->height / 2;
             int downSlowing = slowingAct->y + slowingAct->height / 2;
 
-            if (rightDynamic > leftSlowing && topDynamic < downSlowing && topSlowing < downDynamic) {
+            if (rightDynamic > leftSlowing && leftDynamic < rightSlowing && topDynamic < downSlowing && topSlowing < downDynamic) {
                 possibleMovement /= 1.5;
                 break;
             }
@@ -58,6 +60,7 @@ void Space::updateMoveLeft(Actor* dynamicAct) {
     if (dynamicAct->vx < 0) {
         float possibleMovement = dynamicAct->vx;
 
+        int rightDynamic = dynamicAct->x + dynamicAct->width / 2;
         int leftDynamic = dynamicAct->x - dynamicAct->width / 2;
         int topDynamic = dynamicAct->y - dynamicAct->height / 2;
         int downDynamic = dynamicAct->y + dynamicAct->height / 2;
@@ -80,11 +83,12 @@ void Space::updateMoveLeft(Actor* dynamicAct) {
 
         }
         for (auto const& slowingAct : slowingActors) {
+            int leftSlowing = slowingAct->x - slowingAct->width / 2;
             int rightSlowing = slowingAct->x + slowingAct->width / 2;
             int topSlowing = slowingAct->y - slowingAct->height / 2;
             int downSlowing = slowingAct->y + slowingAct->height / 2;
 
-            if (leftDynamic > rightSlowing && topDynamic < downSlowing && topSlowing < downDynamic) {
+            if (rightDynamic > leftSlowing && leftDynamic < rightSlowing && topDynamic < downSlowing && topSlowing < downDynamic) {
                 possibleMovement /= 1.5;
                 break;
             }

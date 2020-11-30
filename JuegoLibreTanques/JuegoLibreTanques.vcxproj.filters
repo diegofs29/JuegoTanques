@@ -25,6 +25,12 @@
     <Filter Include="Archivos de origen\Actores">
       <UniqueIdentifier>{9ba02876-ecf2-4e9f-81b2-b1fbbce90605}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\Actores\Enemigos">
+      <UniqueIdentifier>{9587bdc8-1858-42a0-b26a-56701645022b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Actores\Enemigos">
+      <UniqueIdentifier>{c819c527-c7d3-4bd0-9f06-01fe01c66bae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -66,6 +72,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Archivos de origen\Actores</Filter>
     </ClCompile>
+    <ClCompile Include="NormalEnemy.cpp">
+      <Filter>Archivos de origen\Actores\Enemigos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -103,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Archivos de encabezado\Actores</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalEnemy.h">
+      <Filter>Archivos de encabezado\Actores\Enemigos</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
