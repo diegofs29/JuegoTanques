@@ -49,15 +49,13 @@ void Space::updateMoveRight(Actor* dynamicAct) {
             int downSlowing = slowingAct->y + slowingAct->height / 2;
 
             if (rightDynamic > leftSlowing && topDynamic < downSlowing && topSlowing < downDynamic) {
-                    
                 possibleMovement /= 1.5;
+                break;
             }
         }
 
         // Ya se han comprobado todos los estáticos
         dynamicAct->realX += possibleMovement;
-        // Restringir la velocidad actual (opcional)
-        dynamicAct->vx = possibleMovement;
     }
 
 }
@@ -98,14 +96,12 @@ void Space::updateMoveLeft(Actor* dynamicAct) {
             int downSlowing = slowingAct->y + slowingAct->height / 2;
 
             if (leftDynamic > rightSlowing && topDynamic < downSlowing && topSlowing < downDynamic) {
-
                 possibleMovement /= 1.5;
+                break;
             }
         }
         // Ya se han comprobado todos los estáticos
         dynamicAct->realX += possibleMovement;
-        // Restringir la velocidad actual (opcional)
-        dynamicAct->vx = possibleMovement;
     }
 }
 
@@ -146,14 +142,12 @@ void Space::updateMoveDown(Actor* dynamicAct) {
             int downSlowing = slowingAct->y + slowingAct->height / 2;
 
             if (rightDynamic > leftSlowing && leftDynamic < rightSlowing && topDynamic < downSlowing && topSlowing < downDynamic) {
-
                 possibleMovement /= 1.5;
+                break;
             }
         }
         // Ya se han comprobado todos los estáticos
         dynamicAct->realY += possibleMovement;
-        // Restringir la velocidad actual (opcional)
-        dynamicAct->vy = possibleMovement;
     }
 }
 
@@ -194,14 +188,12 @@ void Space::updateMoveTop(Actor* dynamicAct) {
             int downSlowing = slowingAct->y + slowingAct->height / 2;
 
             if (rightDynamic > leftSlowing && leftDynamic < rightSlowing && topDynamic < downSlowing && topSlowing < downDynamic) {
-
                 possibleMovement /= 1.5;
+                break;
             }
         }
         // Ya se han comprobado todos los estáticos
         dynamicAct->realY += possibleMovement;
-        // Restringir la velocidad actual (opcional)
-        dynamicAct->vy = possibleMovement;
     }
 }
 
