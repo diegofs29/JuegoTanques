@@ -7,6 +7,7 @@
 #include "Tile.h"
 #include "Space.h"
 #include "Mine.h"
+#include "Enemy.h"
 
 #include <list>
 #include <fstream> // Leer ficheros
@@ -35,6 +36,7 @@ public:
 	list<Tile*> destruibles;
 	list<Projectile*> projectiles;
 	list<Mine*> minas;
+	list<Enemy*> enemigos;
 
 	Background* background;
 	Player* player;

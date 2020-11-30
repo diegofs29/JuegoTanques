@@ -18,6 +18,7 @@ void GameLayer::init() {
 
 	background = new Background("res/fondo.png", WIDTH * 0.5, HEIGHT * 0.5, game);
 
+	enemigos.clear();
 	projectiles.clear();
 
 	loadMap("res/1.txt");
@@ -209,6 +210,9 @@ void GameLayer::loadMapObject(char character, float x, float y)
 void GameLayer::update() {
 	space->update();
 	player->update();
+	for (auto const& enemigo : enemigos) {
+		enemigo->update();
+	}
 	for (auto const& projectile : projectiles) {
 		projectile->update();
 	}
@@ -235,6 +239,9 @@ void GameLayer::draw() {
 		mine->draw(scrollX, scrollY);
 	}
 	player->draw(scrollX, scrollY);
+	for (auto const& enemigo : enemigos) {
+		enemigo->draw();
+	}
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
