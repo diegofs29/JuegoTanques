@@ -2,9 +2,6 @@
 
 Player::Player(float x, float y, float angle, Game* game)
 	: Actor("res/playerIdle.png", x, y, 72, 80, game, angle) {
-	realX = x;
-	realY = y;
-
 	state = game->stateIdle;
 
 	aMovingForward = new Animation("res/playerForward.png", width, height, 576, 80, 1, 8, true, game);
@@ -42,9 +39,6 @@ void Player::update() {
 		animation = aRotatingRight;
 	else if (state == game->stateShooting)
 		animation = aShooting;
-
-	realX += vx;
-	realY += vy;
 
 	x = realX;
 	y = realY;

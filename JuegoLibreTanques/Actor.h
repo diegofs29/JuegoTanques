@@ -11,6 +11,8 @@ public:
 	SDL_Texture* texture;
 	int x;
 	int y;
+	float realX;
+	float realY;
 	float vx;
 	float vy;
 	float angle;

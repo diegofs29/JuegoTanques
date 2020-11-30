@@ -7,6 +7,8 @@ GameLayer::GameLayer(Game* game)
 }
 
 void GameLayer::init() {
+	space = new Space();
+
 	scrollX = 0;
 	scrollY = 0;
 
@@ -95,6 +97,7 @@ void GameLayer::processControls() {
 	if (controlShoot) {
 		Projectile* newProjectile = player->shoot();
 		if (newProjectile != NULL) {
+			space->addDynamicActor(newProjectile);
 			projectiles.push_back(newProjectile);
 		}
 	}
@@ -158,6 +161,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		player = new Player(x, y, 90, game);
 		// modificación para empezar a contar desde el suelo.
 		player->y = player->y - player->height / 2;
+		space->addDynamicActor(player);
 		break;
 	}
 	case 'B': {
@@ -165,6 +169,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		barros.push_back(tile);
+		space->addSlowingActor(tile);
 		break;
 	}
 	case 'S': {
@@ -172,6 +177,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		solidos.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	case 'D': {
@@ -179,6 +185,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		// modificación para empezar a contar desde el suelo.
 		tile->y = tile->y - tile->height / 2;
 		destruibles.push_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
 	}
@@ -186,6 +193,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 
 
 void GameLayer::update() {
+	space->update();
 	player->update();
 	for (auto const& projectile : projectiles) {
 		projectile->update();

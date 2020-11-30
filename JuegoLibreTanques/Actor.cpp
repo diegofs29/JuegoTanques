@@ -6,6 +6,8 @@ Actor::Actor(string filename, float x, float y, int width, int height, Game* gam
 	texture = SDL_CreateTextureFromSurface(game->renderer, surface);
 	this->x = x;
 	this->y = y;
+	this->realX = x;
+	this->realY = y;
 	this->angle = angle;
 	// lo que mide el fichero
 	this->fileWidth = width;

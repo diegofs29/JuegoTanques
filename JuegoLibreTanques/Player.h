@@ -14,8 +14,6 @@ public:
 	Projectile* shoot();
 	void draw(float scrollX = 0, float scrollY = 0) override;
 
-	float realX;
-	float realY;
 	int shootCadence = 30;
 	int shootTime = 0;
 	int state;

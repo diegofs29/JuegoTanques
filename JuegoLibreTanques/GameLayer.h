@@ -5,6 +5,7 @@
 #include "Background.h"
 #include "Projectile.h"
 #include "Tile.h"
+#include "Space.h"
 
 #include <list>
 #include <fstream> // Leer ficheros
@@ -35,6 +36,7 @@ public:
 
 	Background* background;
 	Player* player;
+	Space* space;
 	bool controlShoot = false;
 	int controlMove = 0;
 	int controlRotate = 0;
