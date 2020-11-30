@@ -54,6 +54,10 @@ void GameLayer::keysToControls(SDL_Event event) {
 			if(controlMove == 0 && controlRotate == 0)
 				controlShoot = true;
 			break;
+		case SDLK_m:	// minea
+			if (controlMove == 0 && controlRotate == 0)
+				controlMine = true;
+			break;
 		}
 	}
 	if (event.type == SDL_KEYUP) {
@@ -82,6 +86,9 @@ void GameLayer::keysToControls(SDL_Event event) {
 		case SDLK_SPACE: // dispara
 			controlShoot = false;
 			break;
+		case SDLK_m:	// minea
+			controlMine = false;
+			break;
 		}
 	}
 }
@@ -99,6 +106,13 @@ void GameLayer::processControls() {
 		if (newProjectile != NULL) {
 			space->addDynamicActor(newProjectile);
 			projectiles.push_back(newProjectile);
+		}
+	}
+
+	if (controlMine) {
+		Mine* newMine = player->mine();
+		if (newMine != NULL) {
+			minas.push_back(newMine);
 		}
 	}
 
@@ -216,6 +230,9 @@ void GameLayer::draw() {
 	}
 	for (auto const& projectile : projectiles) {
 		projectile->draw(scrollX, scrollY);
+	}
+	for (auto const& mine : minas) {
+		mine->draw(scrollX, scrollY);
 	}
 	player->draw(scrollX, scrollY);
 

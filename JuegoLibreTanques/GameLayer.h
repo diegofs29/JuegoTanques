@@ -6,6 +6,7 @@
 #include "Projectile.h"
 #include "Tile.h"
 #include "Space.h"
+#include "Mine.h"
 
 #include <list>
 #include <fstream> // Leer ficheros
@@ -33,10 +34,13 @@ public:
 	list<Tile*> solidos;
 	list<Tile*> destruibles;
 	list<Projectile*> projectiles;
+	list<Mine*> minas;
 
 	Background* background;
 	Player* player;
 	Space* space;
+
+	bool controlMine = false;
 	bool controlShoot = false;
 	int controlMove = 0;
 	int controlRotate = 0;

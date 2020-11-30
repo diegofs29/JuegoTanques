@@ -3,6 +3,7 @@
 #include "Actor.h"
 #include "Projectile.h"
 #include "Animation.h"
+#include "Mine.h"
 
 class Player : public Actor
 {
@@ -12,10 +13,13 @@ public:
 	void move(int axis);
 	void rotate(float angle);
 	Projectile* shoot();
+	Mine* mine();
 	void draw(float scrollX = 0, float scrollY = 0) override;
 
 	int shootCadence = 30;
 	int shootTime = 0;
+	int mineDelay = 150;
+	int mineTime = 0;
 	int state;
 
 	Animation* aMovingForward;

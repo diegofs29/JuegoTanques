@@ -28,6 +28,9 @@ void Player::update() {
 	if (shootTime > 0) {
 		shootTime--;
 	}
+	if (mineTime > 0) {
+		mineTime--;
+	}
 
 	if (state == game->stateForward)
 		animation = aMovingForward;
@@ -95,6 +98,18 @@ Projectile* Player::shoot() {
 		state = game->stateShooting;
 		shootTime = shootCadence;
 		return new Projectile(x, y, angle, game);
+	}
+	else {
+		return NULL;
+	}
+}
+
+Mine* Player::mine() {
+	if (mineTime == 0) {
+		mineTime = mineDelay;
+		int posX = -100 * sin(angle * (M_PI/180));
+		int posY = 100 * cos(angle* (M_PI/180));
+		return new Mine(x+posX, y+posY, game);
 	}
 	else {
 		return NULL;
