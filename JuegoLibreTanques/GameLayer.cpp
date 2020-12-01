@@ -20,6 +20,7 @@ void GameLayer::init() {
 
 	enemigos.clear();
 	projectiles.clear();
+	minas.clear();
 
 	loadMap("res/1.txt");
 }
@@ -105,7 +106,6 @@ void GameLayer::processControls() {
 	if (controlShoot) {
 		Projectile* newProjectile = player->shoot();
 		if (newProjectile != NULL) {
-			space->addDynamicActor(newProjectile);
 			projectiles.push_back(newProjectile);
 		}
 	}
@@ -236,6 +236,107 @@ void GameLayer::update() {
 	for (auto const& projectile : projectiles) {
 		projectile->update();
 	}
+
+	for (auto const& mina : minas) {
+		if (player->isOverlap(mina)) {
+			init();
+			return;
+		}
+	}
+
+	list<Enemy*> deleteEnemies;
+	list<Projectile*> deleteProjectiles;
+	list<Tile*> deleteDestruibles;
+	list<Mine*> deleteMinas;
+
+	for (auto const& enemy : enemigos) {
+		for (auto const& projectile : projectiles) {
+			if (enemy->isOverlap(projectile)) {
+				bool pInList = std::find(deleteProjectiles.begin(),
+					deleteProjectiles.end(),
+					projectile) != deleteProjectiles.end();
+
+				if (!pInList) {
+					deleteProjectiles.push_back(projectile);
+				}
+
+				bool eInList = std::find(deleteEnemies.begin(),
+					deleteEnemies.end(),
+					enemy) != deleteEnemies.end();
+
+				if (!eInList) {
+					deleteEnemies.push_back(enemy);
+				}
+			}
+		}
+	}
+
+	for (auto const& destruible : destruibles) {
+		for (auto const& projectile : projectiles) {
+			if (destruible->isOverlap(projectile)) {
+				bool pInList = std::find(deleteProjectiles.begin(),
+					deleteProjectiles.end(),
+					projectile) != deleteProjectiles.end();
+
+				if (!pInList) {
+					deleteProjectiles.push_back(projectile);
+				}
+
+				bool dInList = std::find(deleteDestruibles.begin(),
+					deleteDestruibles.end(),
+					destruible) != deleteDestruibles.end();
+
+				if (!dInList) {
+					deleteDestruibles.push_back(destruible);
+				}
+			}
+		}
+	}
+
+	for (auto const& mina : minas) {
+		for (auto const& enemy : enemigos) {
+			if (mina->isOverlap(enemy)) {
+				bool eInList = std::find(deleteEnemies.begin(),
+					deleteEnemies.end(),
+					enemy) != deleteEnemies.end();
+
+				if (!eInList) {
+					deleteEnemies.push_back(enemy);
+				}
+
+				bool mInList = std::find(deleteMinas.begin(),
+					deleteMinas.end(),
+					mina) != deleteMinas.end();
+
+				if (!mInList) {
+					deleteMinas.push_back(mina);
+				}
+			}
+		}
+	}
+
+	for (auto const& delEnemy : deleteEnemies) {
+		enemigos.remove(delEnemy);
+		space->removeDynamicActor(delEnemy);
+	}
+	deleteEnemies.clear();
+
+	for (auto const& delProjectile : deleteProjectiles) {
+		projectiles.remove(delProjectile);
+	}
+	deleteProjectiles.clear();
+
+	for (auto const& delDestruible : deleteDestruibles) {
+		destruibles.remove(delDestruible);
+		space->removeStaticActor(delDestruible);
+	}
+	deleteDestruibles.clear();
+
+	for (auto const& delMina : deleteMinas) {
+		minas.remove(delMina);
+	}
+	deleteMinas.clear();
+
 	cout << "update GameLayer" << endl;
 }
 
