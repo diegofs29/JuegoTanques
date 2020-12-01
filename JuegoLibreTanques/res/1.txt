@@ -1,8 +1,8 @@
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 S...D............................S
-S.P.D...BBBBBBBBBBB..............S
+S.P.D.L.BBBBBBBBBBB..............S
 S...D......BBBBBBBBB.............S
-S.N...........BBBBBB.............S
+S.N...M.......BBBBBB.............S
 S.........BBBBBB...D........DDDDDS
 S..................D.............S
 S..................D.............S

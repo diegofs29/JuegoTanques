@@ -210,6 +210,20 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		enemigos.push_back(enemy);
 		break;
 	}
+	case 'L': {
+		Enemy* enemy = new LightEnemy(x, y, 90, game);
+		enemy->y = enemy->y - player->height / 2;
+		space->addDynamicActor(enemy);
+		enemigos.push_back(enemy);
+		break;
+	}
+	case 'M': {
+		Enemy* enemy = new MineEnemy(x, y, 90, game);
+		enemy->y = enemy->y - player->height / 2;
+		space->addDynamicActor(enemy);
+		enemigos.push_back(enemy);
+		break;
+	}
 	}
 }
 

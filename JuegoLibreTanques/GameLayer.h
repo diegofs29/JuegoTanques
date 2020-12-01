@@ -9,6 +9,8 @@
 #include "Mine.h"
 #include "Enemy.h"
 #include "NormalEnemy.h"
+#include "LightEnemy.h"
+#include "MineEnemy.h"
 
 #include <list>
 #include <fstream> // Leer ficheros
