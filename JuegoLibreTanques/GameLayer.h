@@ -29,8 +29,8 @@ public:
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
 
-	float scrollX;
-	float scrollY;
+	int scrollX;
+	int scrollY;
 	int mapWidth;
 	int mapHeight;
 

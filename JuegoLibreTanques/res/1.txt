@@ -1,7 +1,7 @@
 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-S..ND.M..........................S
-S.PMD...BBBBBBBBBBB..............S
-S..LD...L..BBBBBBBBB.............S
+S...D.M..........................S
+S.P.D...BBBBBBBBBBB..............S
+S...D...L..BBBBBBBBB.............S
 S.............BBBBBB.............S
 S.........BBBBBB...D........DDDDDS
 S..................D.............S
