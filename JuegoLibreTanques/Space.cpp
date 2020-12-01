@@ -24,9 +24,10 @@ void Space::updateMoveRight(Actor* dynamicAct) {
         int downDynamic = dynamicAct->y + dynamicAct->height / 2;
 
         for (auto const& staticAct : staticActors) {
-            int leftStatic = staticAct->x - staticAct->width / 2;
             int topStatic = staticAct->y - staticAct->height / 2;
             int downStatic = staticAct->y + staticAct->height / 2;
+            int rightStatic = staticAct->x + staticAct->width / 2;
+            int leftStatic = staticAct->x - staticAct->width / 2;
 
             if ((rightDynamic + dynamicAct->vx) >= leftStatic
                 && rightDynamic <= leftStatic
@@ -66,9 +67,10 @@ void Space::updateMoveLeft(Actor* dynamicAct) {
         int downDynamic = dynamicAct->y + dynamicAct->height / 2;
 
         for (auto const& staticAct : staticActors) {
-            int rightStatic = staticAct->x + staticAct->width / 2;
             int topStatic = staticAct->y - staticAct->height / 2;
             int downStatic = staticAct->y + staticAct->height / 2;
+            int rightStatic = staticAct->x + staticAct->width / 2;
+            int leftStatic = staticAct->x - staticAct->width / 2;
 
             if ((leftDynamic + dynamicAct->vx) <= rightStatic
                 && leftDynamic >= rightStatic

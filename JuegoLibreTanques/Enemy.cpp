@@ -1,9 +1,11 @@
 #include "Enemy.h"
 
-Enemy::Enemy(string file, float x, float y, int width, int height, int angle, Game* game)
+Enemy::Enemy(string file, float x, float y, int width, int height, int angle, Game* game, float velocity)
 	: Actor(file, x, y, width, height, game, angle) {
 	realX = x;
 	realY = y;
+
+	this->velocity = velocity;
 
 	state = game->stateIdle;
 }
@@ -48,9 +50,6 @@ void Enemy::update() {
 	else if (state == game->stateShooting)
 		animation = aShooting;
 
-	realX += vx;
-	realY += vy;
-
 	x = realX;
 	y = realY;
 }
@@ -84,19 +83,19 @@ void Enemy::cambiarEstadoRotacion(int angle) {
 
 void Enemy::updateVelocity() {
 	if (angle == 0) {
-		vy = -3;
+		vy = -velocity;
 		vx = 0;
 	}
 	else if (angle == 90 || angle == 360) {
-		vx = 3;
+		vx = velocity;
 		vy = 0;
 	}
 	else if (angle == 180) {
-		vy = 3;
+		vy = velocity;
 		vx = 0;
 	}
 	else if (angle == 270) {
-		vx = -3;
+		vx = -velocity;
 		vy = 0;
 	}
 	else {

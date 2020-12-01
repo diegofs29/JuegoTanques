@@ -6,7 +6,7 @@ class Enemy :
     public Actor
 {
 public:
-    Enemy(string file, float x, float y, int width, int height, int angle, Game* game);
+    Enemy(string file, float x, float y, int width, int height, int angle, Game* game, float velocity = 5);
     virtual void update();
     void rotate(int angle);
     void updateVelocity();
@@ -16,6 +16,7 @@ public:
     int rotateTime = 0;
     int rotateMoment = 50;
     int state;
+    float velocity;
 
     Animation* aMovingForward;
     Animation* aMovingBackward;

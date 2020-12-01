@@ -1,7 +1,7 @@
 #include "MineEnemy.h"
 
 MineEnemy::MineEnemy(float x, float y, int angle, Game* game) :
-	Enemy("res/minadorIdle.png", x, y, 72, 102, angle, game) {
+	Enemy("res/minadorIdle.png", x, y, 72, 102, angle, game, 3) {
 
 	aMovingForward = new Animation("res/minadorForward.png", width, height, 576, 102, 1, 8, true, game);
 	aMovingBackward = new Animation("res/minadorBackward.png", width, height, 576, 102, 1, 8, true, game);

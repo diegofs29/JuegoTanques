@@ -1,7 +1,7 @@
 #include "LightEnemy.h"
 
 LightEnemy::LightEnemy(float x, float y, int angle, Game* game) :
-	Enemy("res/ligeroIdle.png", x, y, 64, 79, angle, game) {
+	Enemy("res/ligeroIdle.png", x, y, 64, 79, angle, game, 7) {
 
 	aMovingForward = new Animation("res/ligeroForward.png", width, height, 512, 79, 1, 8, true, game);
 	aMovingBackward = new Animation("res/ligeroBackward.png", width, height, 512, 79, 1, 8, true, game);
