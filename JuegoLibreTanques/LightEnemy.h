@@ -1,10 +1,10 @@
 #pragma once
 #include "Enemy.h"
-class NormalEnemy :
+class LightEnemy :
     public Enemy
 {
 public:
-    NormalEnemy(float x, float y, int angle, Game* game);
+    LightEnemy(float x, float y, int angle, Game* game);
     void update() override;
 };
 

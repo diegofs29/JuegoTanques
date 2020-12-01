@@ -75,6 +75,9 @@
     <ClCompile Include="NormalEnemy.cpp">
       <Filter>Archivos de origen\Actores\Enemigos</Filter>
     </ClCompile>
+    <ClCompile Include="LightEnemy.cpp">
+      <Filter>Archivos de origen\Actores\Enemigos</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -114,6 +117,9 @@
       <Filter>Archivos de encabezado\Actores</Filter>
     </ClInclude>
     <ClInclude Include="NormalEnemy.h">
+      <Filter>Archivos de encabezado\Actores\Enemigos</Filter>
+    </ClInclude>
+    <ClInclude Include="LightEnemy.h">
       <Filter>Archivos de encabezado\Actores\Enemigos</Filter>
     </ClInclude>
   </ItemGroup>
