@@ -5,6 +5,8 @@ Enemy::Enemy(string file, float x, float y, int width, int height, int angle, Ga
 	realX = x;
 	realY = y;
 
+	shootTime = shootCadence;
+
 	this->velocity = velocity;
 
 	state = game->stateIdle;
@@ -49,6 +51,10 @@ void Enemy::update() {
 		animation = aRotatingRight;
 	else if (state == game->stateShooting)
 		animation = aShooting;
+
+	if (shootTime > 0) {
+		shootTime--;
+	}
 
 	x = realX;
 	y = realY;
@@ -102,6 +108,24 @@ void Enemy::updateVelocity() {
 		vx = vy = 0;
 	}
 	cambiarEstadoMovimiento();
+}
+
+Projectile* Enemy::shoot() {
+	if (shootTime == 0) {
+		aShooting->currentFrame = 0;
+		state = game->stateShooting;
+		shootTime = shootCadence;
+		int posX = (width/2 + 5) * sin(angle * (M_PI / 180));
+		int posY = -(height/2 + 5) * cos(angle * (M_PI / 180));
+		return new Projectile(x + posX, y + posY, angle, game);
+	}
+	else {
+		return NULL;
+	}
+}
+
+Mine* Enemy::mine() {
+	return NULL;
 }
 
 void Enemy::draw(float scrollX, float scrollY) {

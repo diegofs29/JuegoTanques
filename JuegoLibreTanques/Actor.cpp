@@ -17,6 +17,10 @@ Actor::Actor(string filename, float x, float y, int width, int height, Game* gam
 	this->height = height;
 }
 
+Actor::~Actor() {
+	SDL_DestroyTexture(texture);
+}
+
 void Actor::draw(float scrollX, float scrollY) {
 	// Recorte en el fichero de la imagen
 	SDL_Rect source;

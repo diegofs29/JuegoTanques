@@ -6,6 +6,7 @@ class Actor
 {
 public:
 	Actor(string filename, float x, float y, int width, int height, Game* game, int angle = 0);
+	~Actor();
 	virtual void draw(float scrollX = 0, float scrollY = 0);
 	bool isOverlap(Actor* actor);
 

@@ -232,9 +232,21 @@ void GameLayer::update() {
 	player->update();
 	for (auto const& enemigo : enemigos) {
 		enemigo->update();
+		Projectile* p = enemigo->shoot();
+		if (p != NULL) {
+			projectiles.push_back(p);
+		}
+		Mine* m = enemigo->mine();
+		if (m != NULL) {
+			minas.push_back(m);
+		}
 	}
 	for (auto const& projectile : projectiles) {
 		projectile->update();
+		if (player->isOverlap(projectile)) {
+			init();
+			return;
+		}
 	}
 
 	for (auto const& mina : minas) {
@@ -318,22 +330,26 @@ void GameLayer::update() {
 	for (auto const& delEnemy : deleteEnemies) {
 		enemigos.remove(delEnemy);
 		space->removeDynamicActor(delEnemy);
+		delete delEnemy;
 	}
 	deleteEnemies.clear();
 
 	for (auto const& delProjectile : deleteProjectiles) {
 		projectiles.remove(delProjectile);
+		delete delProjectile;
 	}
 	deleteProjectiles.clear();
 
 	for (auto const& delDestruible : deleteDestruibles) {
 		destruibles.remove(delDestruible);
 		space->removeStaticActor(delDestruible);
+		delete delDestruible;
 	}
 	deleteDestruibles.clear();
 
 	for (auto const& delMina : deleteMinas) {
 		minas.remove(delMina);
+		delete delMina;
 	}
 	deleteMinas.clear();
 

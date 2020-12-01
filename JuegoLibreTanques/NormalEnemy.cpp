@@ -2,7 +2,6 @@
 
 NormalEnemy::NormalEnemy(float x, float y, int angle, Game* game) :
 	Enemy("res/normalIdle.png", x, y, 72, 80, angle, game) {
-	rotateTime = rotateMoment;
 	
 	aMovingForward = new Animation("res/normalForward.png", width, height, 576, 80, 1, 8, true, game);
 	aMovingBackward = new Animation("res/normalBackward.png", width, height, 576, 80, 1, 8, true, game);
