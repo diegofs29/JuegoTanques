@@ -5,7 +5,7 @@
 class Actor
 {
 public:
-	Actor(string filename, float x, float y, int width, int height, Game* game, float angle = 0);
+	Actor(string filename, float x, float y, int width, int height, Game* game, int angle = 0);
 	virtual void draw(float scrollX = 0, float scrollY = 0);
 
 	SDL_Texture* texture;
@@ -15,7 +15,7 @@ public:
 	float realY;
 	float vx;
 	float vy;
-	float angle;
+	int angle;
 	int width;
 	int height;
 	int fileWidth;

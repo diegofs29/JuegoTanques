@@ -1,6 +1,6 @@
 #include "Actor.h"
 
-Actor::Actor(string filename, float x, float y, int width, int height, Game* game, float angle) {
+Actor::Actor(string filename, float x, float y, int width, int height, Game* game, int angle) {
 	this->game = game;
 	SDL_Surface* surface = IMG_Load(filename.c_str());
 	texture = SDL_CreateTextureFromSurface(game->renderer, surface);

@@ -10,12 +10,23 @@ Player::Player(float x, float y, float angle, Game* game)
 	aRotatingRight = new Animation("res/playerRight.png", width, height, 576, 80, 1, 8, true, game);
 
 	aShooting = new Animation("res/playerShot.png", width, height, 360, 80, 1, 5, false, game);
-
-	animation = aMovingForward;
 }
 
 void Player::update() {
-	bool endAnimation = animation->update();
+	if (state == game->stateForward)
+		animation = aMovingForward;
+	else if (state == game->stateBackward)
+		animation = aMovingBackward;
+	else if (state == game->stateLeft)
+		animation = aRotatingLeft;
+	else if (state == game->stateRight)
+		animation = aRotatingRight;
+	else if (state == game->stateShooting)
+		animation = aShooting;
+
+	bool endAnimation = false;
+	if (state != game->stateIdle)
+		endAnimation = animation->update();
 
 	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
@@ -31,17 +42,6 @@ void Player::update() {
 	if (mineTime > 0) {
 		mineTime--;
 	}
-
-	if (state == game->stateForward)
-		animation = aMovingForward;
-	else if (state == game->stateBackward)
-		animation = aMovingBackward;
-	else if (state == game->stateLeft)
-		animation = aRotatingLeft;
-	else if (state == game->stateRight)
-		animation = aRotatingRight;
-	else if (state == game->stateShooting)
-		animation = aShooting;
 
 	x = realX;
 	y = realY;
