@@ -22,10 +22,11 @@ void Enemy::update() {
 		// Estaba disparando
 		if (state == game->stateShooting) {
 			state = game->stateIdle;
+			updateVelocity();
 		}
 	}
 
-	if (rotating) {
+	if (rotating && state != game->stateShooting) {
 		rotate(2);
 		if (this->angle % 90 == 0) {
 			rotating = false;
@@ -115,6 +116,7 @@ Projectile* Enemy::shoot() {
 		aShooting->currentFrame = 0;
 		state = game->stateShooting;
 		shootTime = shootCadence;
+		vx = vy = 0;
 		int posX = (width/2 + 5) * sin(angle * (M_PI / 180));
 		int posY = -(height/2 + 5) * cos(angle * (M_PI / 180));
 		return new Projectile(x + posX, y + posY, angle, game);

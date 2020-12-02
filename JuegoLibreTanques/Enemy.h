@@ -18,10 +18,10 @@ public:
 
     bool rotating = false;
     int rotateTime = 0;
-    int rotateMoment = 50;
+    int rotateMoment = 75;
     int state;
     float velocity;
-    int shootCadence = 30;
+    int shootCadence = 50;
     int shootTime = 0;
 
     Animation* aMovingForward;
