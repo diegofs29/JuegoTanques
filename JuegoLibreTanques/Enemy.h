@@ -11,10 +11,14 @@ public:
     Enemy(string file, float x, float y, int width, int height, int angle, Game* game, float velocity = 5);
     virtual void update();
     void rotate(int angle);
-    void updateVelocity();
+    virtual void updateVelocity();
+    void changeAnimation();
     void draw(float scrollX = 0, float scrollY = 0) override;
     virtual Projectile* shoot();
     virtual Mine* mine();
+    void cambiarEstadoMovimiento();
+    void cambiarEstadoRotacion(int angle);
+    bool checkSpeed();
 
     bool rotating = false;
     int rotateTime = 0;
@@ -23,6 +27,9 @@ public:
     float velocity;
     int shootCadence = 50;
     int shootTime = 0;
+    float realvx;
+    float realvy;
+
 
     Animation* aMovingForward;
     Animation* aMovingBackward;
@@ -31,8 +38,5 @@ public:
     Animation* aShooting;
     Animation* animation; // Referencia a la animación mostrada
 
-private:
-    void cambiarEstadoMovimiento();
-    void cambiarEstadoRotacion(int angle);
 };
 

@@ -22,7 +22,7 @@ void GameLayer::init() {
 	projectiles.clear();
 	minas.clear();
 
-	loadMap("res/1.txt");
+	loadMap("res/2.txt");
 }
 
 void GameLayer::keysToControls(SDL_Event event) {
@@ -206,22 +206,22 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	case 'N': {
 		Enemy* enemy = new NormalEnemy(x, y, 90, game);
 		enemy->y = enemy->y - enemy->height / 2;
-		space->addDynamicActor(enemy);
 		enemigos.push_back(enemy);
+		space->addDynamicActor(enemy);
 		break;
 	}
 	case 'L': {
 		Enemy* enemy = new LightEnemy(x, y, 90, game);
 		enemy->y = enemy->y - enemy->height / 2;
-		space->addDynamicActor(enemy);
 		enemigos.push_back(enemy);
+		space->addDynamicActor(enemy);
 		break;
 	}
 	case 'M': {
 		Enemy* enemy = new MineEnemy(x, y, 90, game);
 		enemy->y = enemy->y - enemy->height / 2;
-		space->addDynamicActor(enemy);
 		enemigos.push_back(enemy);
+		space->addDynamicActor(enemy);
 		break;
 	}
 	}

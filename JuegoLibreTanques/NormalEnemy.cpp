@@ -9,6 +9,8 @@ NormalEnemy::NormalEnemy(float x, float y, int angle, Game* game) :
 	aRotatingRight = new Animation("res/normalRight.png", width, height, 576, 80, 1, 8, true, game);
 
 	aShooting = new Animation("res/normalShot.png", width, height, 360, 80, 1, 5, false, game);
+
+	state = game->stateIdle;
 }
 
 

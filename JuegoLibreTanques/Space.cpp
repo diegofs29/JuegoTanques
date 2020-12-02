@@ -35,6 +35,7 @@ void Space::updateMoveRight(Actor* dynamicAct) {
 
                 if (possibleMovement >= leftStatic - rightDynamic) {
                     possibleMovement = leftStatic - rightDynamic;
+                    dynamicAct->vx = possibleMovement;  // Solo es necesario si se choca, en el resto de casos no
                 }
             }
         }
@@ -93,6 +94,7 @@ void Space::updateMoveLeft(Actor* dynamicAct) {
 
                 if (possibleMovement <= rightStatic - leftDynamic) {
                     possibleMovement = rightStatic - leftDynamic;
+                    dynamicAct->vx = possibleMovement;
                 }
 
             }
@@ -154,6 +156,7 @@ void Space::updateMoveDown(Actor* dynamicAct) {
 
                 if (possibleMovement >= topStatic - downDynamic) {
                     possibleMovement = topStatic - downDynamic;
+                    dynamicAct->vy = possibleMovement;
                 }
             }
         }
@@ -211,6 +214,7 @@ void Space::updateMoveTop(Actor* dynamicAct) {
 
                 if (possibleMovement <= downStatic - topDynamic) {
                     possibleMovement = downStatic - topDynamic;
+                    dynamicAct->vy = possibleMovement;
                 }
             }
         }

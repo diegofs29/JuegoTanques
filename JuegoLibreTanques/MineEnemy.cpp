@@ -10,6 +10,7 @@ MineEnemy::MineEnemy(float x, float y, int angle, Game* game) :
 
 	aShooting = new Animation("res/minadorShot.png", width, height, 360, 102, 1, 5, false, game);
 
+	state = game->stateIdle;
 }
 
 void MineEnemy::update() {

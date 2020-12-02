@@ -39,9 +39,29 @@ void Enemy::update() {
 	}
 	else {
 		rotating = true;
-		vx = vy = 0;
+		realvx = vx = 0;
+		realvy = vy = 0;
 	}
 
+	bool crash = checkSpeed();
+
+	if (crash) {
+		rotating = true;
+		realvx = vx = 0;
+		realvy = vy = 0;
+	}
+
+	changeAnimation();
+
+	if (shootTime > 0) {
+		shootTime--;
+	}
+
+	x = realX;
+	y = realY;
+}
+
+void Enemy::changeAnimation() {
 	if (state == game->stateForward)
 		animation = aMovingForward;
 	else if (state == game->stateBackward)
@@ -52,13 +72,6 @@ void Enemy::update() {
 		animation = aRotatingRight;
 	else if (state == game->stateShooting)
 		animation = aShooting;
-
-	if (shootTime > 0) {
-		shootTime--;
-	}
-
-	x = realX;
-	y = realY;
 }
 
 void Enemy::cambiarEstadoMovimiento() {
@@ -90,25 +103,30 @@ void Enemy::cambiarEstadoRotacion(int angle) {
 
 void Enemy::updateVelocity() {
 	if (angle == 0) {
-		vy = -velocity;
-		vx = 0;
+		realvy = vy = -velocity;
+		realvx = vx = 0;
 	}
 	else if (angle == 90 || angle == 360) {
-		vx = velocity;
-		vy = 0;
+		realvx = vx = velocity;
+		realvy = vy = 0;
 	}
 	else if (angle == 180) {
-		vy = velocity;
-		vx = 0;
+		realvy = vy = velocity;
+		realvx = vx = 0;
 	}
 	else if (angle == 270) {
-		vx = -velocity;
-		vy = 0;
+		realvx = vx = -velocity;
+		realvy = vy = 0;
 	}
 	else {
-		vx = vy = 0;
+		realvx = vx = 0;
+		realvy = vy = 0;
 	}
 	cambiarEstadoMovimiento();
+}
+
+bool Enemy::checkSpeed() {
+	return realvx != vx || realvy != vy;
 }
 
 Projectile* Enemy::shoot() {
@@ -116,7 +134,8 @@ Projectile* Enemy::shoot() {
 		aShooting->currentFrame = 0;
 		state = game->stateShooting;
 		shootTime = shootCadence;
-		vx = vy = 0;
+		realvx = vx = 0;
+		realvy = vy = 0;
 		int posX = (width/2 + 5) * sin(angle * (M_PI / 180));
 		int posY = -(height/2 + 5) * cos(angle * (M_PI / 180));
 		return new Projectile(x + posX, y + posY, angle, game);
