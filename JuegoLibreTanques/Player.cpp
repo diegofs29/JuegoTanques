@@ -109,8 +109,8 @@ Projectile* Player::shoot() {
 Mine* Player::mine() {
 	if (mineTime == 0) {
 		mineTime = mineDelay;
-		int posX = -100 * sin(angle * (M_PI/180));
-		int posY = 100 * cos(angle* (M_PI/180));
+		int posX = -60 * sin(angle * (M_PI/180));
+		int posY = 60 * cos(angle* (M_PI/180));
 		return new Mine(x+posX, y+posY, game);
 	}
 	else {

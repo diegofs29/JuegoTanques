@@ -12,6 +12,7 @@ LightEnemy::LightEnemy(float x, float y, int angle, Game* game) :
 
 	state = game->stateIdle;
 
+	rotateTime = rotateMoment;
 }
 
 void LightEnemy::update() {
@@ -45,8 +46,7 @@ void LightEnemy::update() {
 	}
 	else if (!rotating) {
 		rotating = true;
-		rotationAngle = rand() % 361 + (-180);
-		cout << rotationAngle << endl;
+		rotationAngle = rand() % 361 - 180;
 		if (rotationAngle < 0)
 			rotation = -2;
 		else if (rotationAngle > 0)
@@ -55,9 +55,10 @@ void LightEnemy::update() {
 			rotating = false;
 			rotateTime = rotateMoment;
 		}
-		if (rotating)
+		if (rotating) {
 			realvx = vx = 0;
 			realvy = vy = 0;
+		}
 	}
 
 	bool crash = checkSpeed();
@@ -73,6 +74,8 @@ void LightEnemy::update() {
 		shootTime--;
 	}
 
+	if (!rotating && state != game->stateShooting)
+		updateVelocity();
 	changeAnimation();
 
 	x = realX;

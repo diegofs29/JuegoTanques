@@ -11,6 +11,8 @@ NormalEnemy::NormalEnemy(float x, float y, int angle, Game* game) :
 	aShooting = new Animation("res/normalShot.png", width, height, 360, 80, 1, 5, false, game);
 
 	state = game->stateIdle;
+
+	rotateTime = rotateMoment;
 }
 
 

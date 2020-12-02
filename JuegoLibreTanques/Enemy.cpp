@@ -51,11 +51,14 @@ void Enemy::update() {
 		realvy = vy = 0;
 	}
 
-	changeAnimation();
 
 	if (shootTime > 0) {
 		shootTime--;
 	}
+
+	if (!rotating && state != game->stateShooting)
+		updateVelocity();
+	changeAnimation();
 
 	x = realX;
 	y = realY;
@@ -89,6 +92,8 @@ void Enemy::rotate(int angle) {
 	this->angle += angle;
 	if (this->angle >= 360)
 		this->angle = 0;
+	else if (this->angle <= 0)
+		this->angle = 360;
 	cambiarEstadoRotacion(angle);
 }
 
@@ -102,11 +107,11 @@ void Enemy::cambiarEstadoRotacion(int angle) {
 }
 
 void Enemy::updateVelocity() {
-	if (angle == 0) {
+	if (angle == 0 || angle == 360) {
 		realvy = vy = -velocity;
 		realvx = vx = 0;
 	}
-	else if (angle == 90 || angle == 360) {
+	else if (angle == 90) {
 		realvx = vx = velocity;
 		realvy = vy = 0;
 	}
