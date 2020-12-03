@@ -9,8 +9,8 @@ public:
     void update();
 
     float velocidad;
-    float realX;
-    float realY;
+    float realVx;
+    float realVy;
 
 private:
     void calcularVelocidad();

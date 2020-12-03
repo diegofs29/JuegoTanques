@@ -18,6 +18,6 @@ void Projectile::update() {
 void Projectile::calcularVelocidad() {
 	float seno = sin(angle * (M_PI / 180.0));
 	float coseno = cos(angle * (M_PI / 180.0));
-	vx = seno * velocidad;
-	vy = -coseno * velocidad;
+	realVx = vx = seno * velocidad;
+	realVy = vy = -coseno * velocidad;
 }

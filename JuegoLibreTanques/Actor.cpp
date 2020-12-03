@@ -63,3 +63,11 @@ bool Actor::containsPoint(int pointX, int pointY) {
 	}
 	return false;
 }
+
+bool Actor::isInRender(float scrollX, float scrollY) {
+	if ((x - scrollX) - width / 2 <= WIDTH && (x - scrollX) + width / 2 >= 0 &&
+		(y - scrollY) - height / 2 <= HEIGHT && (y - scrollY) + height / 2 >= 0) {
+		return true;
+	}
+	return false;
+}

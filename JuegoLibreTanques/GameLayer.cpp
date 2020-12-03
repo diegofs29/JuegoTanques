@@ -308,6 +308,20 @@ void GameLayer::update() {
 	list<Tile*> deleteDestruibles;
 	list<Mine*> deleteMinas;
 
+	for (auto const& projectile : projectiles) {
+		if (projectile->isInRender(scrollX) == false 
+			|| projectile->vx != projectile->realVx || projectile->vy != projectile->realVy) {
+			bool pInList = std::find(deleteProjectiles.begin(),
+				deleteProjectiles.end(),
+				projectile) != deleteProjectiles.end();
+
+			if (!pInList) {
+				deleteProjectiles.push_back(projectile);
+			}
+		}
+	}
+
+
 	for (auto const& enemy : enemigos) {
 		for (auto const& projectile : projectiles) {
 			if (enemy->isOverlap(projectile)) {
@@ -419,17 +433,17 @@ void GameLayer::draw() {
 	for (auto const& barro : barros) {
 		barro->draw(scrollX, scrollY);
 	}
-	for (auto const& solido : solidos) {
-		solido->draw(scrollX, scrollY);
-	}
-	for (auto const& destruible : destruibles) {
-		destruible->draw(scrollX, scrollY);
-	}
 	for (auto const& projectile : projectiles) {
 		projectile->draw(scrollX, scrollY);
 	}
 	for (auto const& mine : minas) {
 		mine->draw(scrollX, scrollY);
+	}
+	for (auto const& solido : solidos) {
+		solido->draw(scrollX, scrollY);
+	}
+	for (auto const& destruible : destruibles) {
+		destruible->draw(scrollX, scrollY);
 	}
 	player->draw(scrollX, scrollY);
 	for (auto const& enemigo : enemigos) {
