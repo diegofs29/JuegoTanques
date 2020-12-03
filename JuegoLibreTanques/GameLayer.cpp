@@ -6,6 +6,10 @@
 GameLayer::GameLayer(Game* game)
 	: Layer(game) {
 	//llama al constructor del padre : Layer(renderer)
+	pause = true;
+	message = new Actor("res/instruccionesTeclado.png", WIDTH * 0.5, HEIGHT * 0.5,
+		WIDTH, HEIGHT, game);
+
 	init();
 }
 
@@ -56,8 +60,10 @@ void GameLayer::keysToControls(SDL_Event event) {
 				controlMove = 1;
 			break;
 		case SDLK_SPACE: // dispara
-			if(controlMove == 0 && controlRotate == 0)
-				controlShoot = true;
+			if(!pause)
+				if(controlMove == 0 && controlRotate == 0)
+					controlShoot = true;
+			controlContinue = true;
 			break;
 		case SDLK_m:	// minea
 			if (controlMove == 0 && controlRotate == 0)
@@ -105,6 +111,11 @@ void GameLayer::processControls() {
 		keysToControls(event);
 	}
 	//procesar controles
+	if (controlContinue) {
+		pause = false;
+		controlContinue = false;
+	}
+
 	// Disparar
 	if (controlShoot) {
 		Projectile* newProjectile = player->shoot();
@@ -177,8 +188,6 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	switch (character) {
 	case 'P': {
 		player = new Player(x, y, 90, game);
-		// modificación para empezar a contar desde el suelo.
-		player->y = player->y - player->height / 2;
 		space->addDynamicActor(player);
 		break;
 	}
@@ -208,21 +217,18 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'N': {
 		Enemy* enemy = new NormalEnemy(x, y, 90, game);
-		enemy->y = enemy->y - enemy->height / 2;
 		enemigos.push_back(enemy);
 		space->addDynamicActor(enemy);
 		break;
 	}
 	case 'L': {
 		Enemy* enemy = new LightEnemy(x, y, 90, game);
-		enemy->y = enemy->y - enemy->height / 2;
 		enemigos.push_back(enemy);
 		space->addDynamicActor(enemy);
 		break;
 	}
 	case 'M': {
 		Enemy* enemy = new MineEnemy(x, y, 90, game);
-		enemy->y = enemy->y - enemy->height / 2;
 		enemigos.push_back(enemy);
 		space->addDynamicActor(enemy);
 		break;
@@ -231,6 +237,23 @@ void GameLayer::loadMapObject(char character, float x, float y)
 }
 
 void GameLayer::update() {
+	if (pause) {
+		return;
+	}
+
+	//Nivel superado
+	if (enemigos.size() == 0) {
+		//game->currentLevel++;
+		//if (game->currentLevel > game->finalLevel) {
+			//game->currentLevel = 0;
+		//}
+		message = new Actor("res/gameSuccess.png", WIDTH * 0.5, HEIGHT * 0.5,
+			WIDTH, HEIGHT, game);
+		pause = true;
+		init();
+
+	}
+
 	space->update();
 	player->update();
 	for (auto const& enemigo : enemigos) {
@@ -246,16 +269,25 @@ void GameLayer::update() {
 	}
 	for (auto const& projectile : projectiles) {
 		projectile->update();
+	}
+
+	for (auto const& projectile : projectiles) {
 		if (player->isOverlap(projectile)) {
+			message = new Actor("res/gameOver.png", WIDTH * 0.5, HEIGHT * 0.5,
+				WIDTH, HEIGHT, game);
+			pause = true;
 			init();
-			return;
+			break;
 		}
 	}
 
 	for (auto const& mina : minas) {
 		if (player->isOverlap(mina)) {
+			message = new Actor("res/gameOver.png", WIDTH * 0.5, HEIGHT * 0.5,
+				WIDTH, HEIGHT, game);
+			pause = true;
 			init();
-			return;
+			break;
 		}
 	}
 
@@ -380,7 +412,11 @@ void GameLayer::draw() {
 	}
 	player->draw(scrollX, scrollY);
 	for (auto const& enemigo : enemigos) {
-		enemigo->draw(scrollX, scrollY);
+ 		enemigo->draw(scrollX, scrollY);
+	}
+
+	if (pause) {
+		message->draw();
 	}
 
 	SDL_RenderPresent(game->renderer); // Renderiza

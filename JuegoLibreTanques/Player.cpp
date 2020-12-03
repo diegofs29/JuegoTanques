@@ -119,7 +119,7 @@ Mine* Player::mine() {
 }
 
 void Player::draw(float scrollX, float scrollY) {
-	if (state != game->stateIdle)
+	if (state != game->stateIdle && animation != NULL)
 		animation->draw(x - scrollX, y - scrollY, angle);
 	else
 		Actor::draw(scrollX, scrollY);

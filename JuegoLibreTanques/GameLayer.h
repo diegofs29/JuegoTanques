@@ -41,7 +41,10 @@ public:
 	Background* background;
 	Player* player;
 	Space* space;
+	Actor* message;
 
+	bool pause;
+	bool controlContinue = false;
 	bool controlMine = false;
 	bool controlShoot = false;
 	int controlMove = 0;
