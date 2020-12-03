@@ -245,6 +245,16 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		space->addDynamicActor(enemy);
 		break;
 	}
+	case 'A': {
+		Municion* ammo = new Municion(x, y, game);
+		ammos.push_back(ammo);
+		break;
+	}
+	case 'X': {
+		Bonus* bonus = new Bonus(x, y, game);
+		bonuses.push_back(bonus);
+		break;
+	}
 	}
 }
 
@@ -307,6 +317,38 @@ void GameLayer::update() {
 	list<Projectile*> deleteProjectiles;
 	list<Tile*> deleteDestruibles;
 	list<Mine*> deleteMinas;
+	list<Municion*> deleteAmmos;
+	list<Bonus*> deleteBonuses;
+
+	for (auto const& bonus : bonuses) {
+		if (player->isOverlap(bonus)) {
+			points += bonus->points;
+			bool bInList = std::find(deleteBonuses.begin(),
+				deleteBonuses.end(),
+				bonus) != deleteBonuses.end();
+
+			if (!bInList) {
+				deleteBonuses.push_back(bonus);
+			}
+			textPoints->content = "Puntos: " + to_string(points);
+		}
+	}
+
+	for (auto const& ammo : ammos) {
+		if (player->isOverlap(ammo)) {
+			player->ammo += ammo->ammo;
+			player->mines += ammo->mines;
+			bool aInList = std::find(deleteAmmos.begin(),
+				deleteAmmos.end(),
+				ammo) != deleteAmmos.end();
+
+			if (!aInList) {
+				deleteAmmos.push_back(ammo);
+			}
+			textAmmo->content = "Municion: " + to_string(player->ammo);
+			textMines->content = "Minas: " + to_string(player->mines);
+		}
+	}
 
 	for (auto const& projectile : projectiles) {
 		if (projectile->isInRender(scrollX) == false 
@@ -423,6 +465,20 @@ void GameLayer::update() {
 	}
 	deleteMinas.clear();
 
+	for (auto const& delAmmo : deleteAmmos) {
+		ammos.remove(delAmmo);
+		delete delAmmo;
+	}
+
+	deleteAmmos.clear();
+
+	for (auto const& delBonus : deleteBonuses) {
+		bonuses.remove(delBonus);
+		delete delBonus;
+	}
+
+	deleteBonuses.clear();
+
 	cout << "update GameLayer" << endl;
 }
 
@@ -448,6 +504,12 @@ void GameLayer::draw() {
 	player->draw(scrollX, scrollY);
 	for (auto const& enemigo : enemigos) {
  		enemigo->draw(scrollX, scrollY);
+	}
+	for (auto const& ammo : ammos) {
+		ammo->draw(scrollX, scrollY);
+	}
+	for (auto const& bonus : bonuses) {
+		bonus->draw(scrollX, scrollY);
 	}
 	textPoints->draw();
 	textAmmo->draw();

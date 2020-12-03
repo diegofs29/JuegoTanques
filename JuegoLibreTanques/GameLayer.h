@@ -9,6 +9,8 @@
 #include "Mine.h"
 #include "Enemy.h"
 #include "Text.h"
+#include "Municion.h"
+#include "Bonus.h"
 
 #include <list>
 #include <fstream> // Leer ficheros
@@ -38,6 +40,8 @@ public:
 	list<Projectile*> projectiles;
 	list<Mine*> minas;
 	list<Enemy*> enemigos;
+	list<Municion*> ammos;
+	list<Bonus*> bonuses;
 
 	Background* background;
 	Player* player;

@@ -1,6 +1,6 @@
 SSSSSSSSSS
-S........S
+S.A......S
 SP..M....S
-S........S
+S.X......S
 SBBBBBBBBS
 SSSSSSSSSS
