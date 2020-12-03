@@ -24,6 +24,8 @@ public:
 	SDL_Window* window; // ventana
 	SDL_Renderer* renderer; // renderizador
 	bool loopActive; // Juego activo
+	Layer* layer;
+	Layer* menuLayer;
 	Layer* gameLayer;
 
 	int const stateForward = 1;
@@ -34,4 +36,9 @@ public:
 	int const stateDying = 6;
 	int const stateDead = 7;
 	int const stateIdle = 8;
+
+	int input;
+	int const inputKeyboard = 1;
+	int const inputMouse = 2;
+	int const inputGamePad = 3;
 };

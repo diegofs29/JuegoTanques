@@ -1,4 +1,7 @@
 #include "GameLayer.h"
+#include "NormalEnemy.h"
+#include "LightEnemy.h"
+#include "MineEnemy.h"
 
 GameLayer::GameLayer(Game* game)
 	: Layer(game) {
