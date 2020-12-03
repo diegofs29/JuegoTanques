@@ -93,7 +93,8 @@ void Player::cambiarEstadoRotacion(int angle) {
 }
 
 Projectile* Player::shoot() {
-	if (shootTime == 0) {
+	if (shootTime == 0 && ammo > 0) {
+		ammo > 0 ? ammo-- : ammo = 0;
 		aShooting->currentFrame = 0;
 		state = game->stateShooting;
 		shootTime = shootCadence;
@@ -107,7 +108,8 @@ Projectile* Player::shoot() {
 }
 
 Mine* Player::mine() {
-	if (mineTime == 0) {
+	if (mineTime == 0 && mines > 0) {
+		mines > 0 ? mines-- : mines = 0;
 		mineTime = mineDelay;
 		int posX = -60 * sin(angle * (M_PI/180));
 		int posY = 60 * cos(angle* (M_PI/180));

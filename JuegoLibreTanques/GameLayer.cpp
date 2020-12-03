@@ -29,7 +29,17 @@ void GameLayer::init() {
 	projectiles.clear();
 	minas.clear();
 
+	points = 0;
+	textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.04, game);
+	textPoints->content = "Puntos: " + to_string(points);
+	
 	loadMap("res/2.txt");
+	
+	textAmmo = new Text("hola", WIDTH * 0.08, HEIGHT * 0.04, game);
+	textAmmo->content = "Municion: " + to_string(player->ammo);
+	
+	textMines = new Text("hola", WIDTH * 0.5, HEIGHT * 0.04, game);
+	textMines->content = "Minas: " + to_string(player->mines);
 }
 
 void GameLayer::keysToControls(SDL_Event event) {
@@ -117,18 +127,20 @@ void GameLayer::processControls() {
 	}
 
 	// Disparar
-	if (controlShoot) {
+	if (controlShoot && !pause) {
 		Projectile* newProjectile = player->shoot();
 		if (newProjectile != NULL) {
 			projectiles.push_back(newProjectile);
 		}
+		textAmmo->content = "Municion: " + to_string(player->ammo);
 	}
 
-	if (controlMine) {
+	if (controlMine && !pause) {
 		Mine* newMine = player->mine();
 		if (newMine != NULL) {
 			minas.push_back(newMine);
 		}
+		textMines->content = "Minas: " + to_string(player->mines);
 	}
 
 	// Mover
@@ -314,6 +326,10 @@ void GameLayer::update() {
 				if (!eInList) {
 					deleteEnemies.push_back(enemy);
 				}
+
+				points += 30;
+				textPoints->content = "Puntos: " + to_string(points);
+
 			}
 		}
 	}
@@ -336,6 +352,9 @@ void GameLayer::update() {
 				if (!dInList) {
 					deleteDestruibles.push_back(destruible);
 				}
+
+				points += 10;
+				textPoints->content = "Puntos: " + to_string(points);
 			}
 		}
 	}
@@ -358,6 +377,8 @@ void GameLayer::update() {
 				if (!mInList) {
 					deleteMinas.push_back(mina);
 				}
+				points += 50;
+				textPoints->content = "Puntos: " + to_string(points);
 			}
 		}
 	}
@@ -414,6 +435,9 @@ void GameLayer::draw() {
 	for (auto const& enemigo : enemigos) {
  		enemigo->draw(scrollX, scrollY);
 	}
+	textPoints->draw();
+	textAmmo->draw();
+	textMines->draw();
 
 	if (pause) {
 		message->draw();

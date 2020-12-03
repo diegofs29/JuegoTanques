@@ -16,6 +16,8 @@ public:
 	Mine* mine();
 	void draw(float scrollX = 0, float scrollY = 0) override;
 
+	int ammo = 10;
+	int mines = 2;
 	int shootCadence = 30;
 	int shootTime = 0;
 	int mineDelay = 150;

@@ -27,6 +27,7 @@ public:
 	Layer* layer;
 	Layer* menuLayer;
 	Layer* gameLayer;
+	TTF_Font* font;
 
 	int const stateForward = 1;
 	int const stateBackward = 2;

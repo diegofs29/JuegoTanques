@@ -18,6 +18,10 @@ Game::Game() {
 	gameLayer = new GameLayer(this);
 	layer = menuLayer;
 
+	// fuentes
+	TTF_Init();
+	font = TTF_OpenFont("res/sans.ttf", 24);
+
 	loopActive = true; // bucle activo
 	loop();
 }

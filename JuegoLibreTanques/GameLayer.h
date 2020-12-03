@@ -8,6 +8,7 @@
 #include "Space.h"
 #include "Mine.h"
 #include "Enemy.h"
+#include "Text.h"
 
 #include <list>
 #include <fstream> // Leer ficheros
@@ -49,5 +50,9 @@ public:
 	bool controlShoot = false;
 	int controlMove = 0;
 	int controlRotate = 0;
+	int points;
+	Text* textPoints;
+	Text* textAmmo;
+	Text* textMines;
 };
 
