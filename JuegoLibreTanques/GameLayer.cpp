@@ -6,10 +6,14 @@
 GameLayer::GameLayer(Game* game)
 	: Layer(game) {
 	//llama al constructor del padre : Layer(renderer)
+	if (game->input == game->inputKeyboard)
+		message = new Actor("res/instruccionesTeclado.png", WIDTH * 0.5, HEIGHT * 0.5,
+			WIDTH, HEIGHT, game);
+	else
+		message = new Actor("res/instruccionesMando.png", WIDTH * 0.5, HEIGHT * 0.5,
+			WIDTH, HEIGHT, game);
+	gamePad = SDL_GameControllerOpen(0);
 	pause = true;
-	message = new Actor("res/instruccionesTeclado.png", WIDTH * 0.5, HEIGHT * 0.5,
-		WIDTH, HEIGHT, game);
-
 	init();
 }
 
@@ -54,30 +58,24 @@ void GameLayer::keysToControls(SDL_Event event) {
 			game->loopActive = false;
 			break;
 		case SDLK_d: // derecha
-			if(controlMove == 0)
-				controlRotate = 1;
+			controlRotate = 1;
 			break;
 		case SDLK_a: // izquierda
-			if (controlMove == 0)
-				controlRotate = -1;
+			controlRotate = -1;
 			break;
 		case SDLK_w: // arriba
-			if(controlRotate == 0)
-				controlMove = -1;
+			controlMove = -1;
 			break;
 		case SDLK_s: // abajo
-			if (controlRotate == 0)
-				controlMove = 1;
+			controlMove = 1;
 			break;
 		case SDLK_SPACE: // dispara
 			if(!pause)
-				if(controlMove == 0 && controlRotate == 0)
-					controlShoot = true;
+				controlShoot = true;
 			controlContinue = true;
 			break;
 		case SDLK_m:	// minea
-			if (controlMove == 0 && controlRotate == 0)
-				controlMine = true;
+			controlMine = true;
 			break;
 		}
 	}
@@ -114,11 +112,83 @@ void GameLayer::keysToControls(SDL_Event event) {
 	}
 }
 
+void GameLayer::gamePadToControls(SDL_Event event) {
+
+	bool buttonA = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_A);
+	bool buttonB = SDL_GameControllerGetButton(gamePad, SDL_CONTROLLER_BUTTON_B);
+	int stickX = SDL_GameControllerGetAxis(gamePad, SDL_CONTROLLER_AXIS_LEFTX);
+	int lt = SDL_GameControllerGetAxis(gamePad, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
+	int rt = SDL_GameControllerGetAxis(gamePad, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
+
+	if (event.type == SDL_QUIT) {
+		game->loopActive = false;
+	}
+
+	if (stickX > 4000) {
+		controlRotate = 1;
+	}
+	else if (stickX < -4000) {
+		controlRotate = -1;
+	}
+	else {
+		controlRotate = 0;
+	}
+	cout << buttonA << endl;
+	if (buttonA) {
+		if (!pause)
+			if (controlMove == 0 && controlRotate == 0)
+				controlShoot = true;
+		controlContinue = true;
+	}
+	else {
+		controlShoot = false;
+	}
+
+	if (buttonB) {
+		controlMine = true;
+	}
+	else {
+		controlMine = false;
+	}
+
+	if (lt > 4000) {
+		controlMove = 1;
+	}
+	else if (rt > 4000) {
+		controlMove = -1;
+	}
+	else {
+		controlMove = 0;
+	}
+}
+
 void GameLayer::processControls() {
 	// obtener controles
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
-		keysToControls(event);
+		if (event.type == SDL_CONTROLLERDEVICEADDED) {
+			gamePad = SDL_GameControllerOpen(0);
+			if (gamePad == NULL) {
+				cout << "error en GamePad" << endl;
+			}
+			else {
+				cout << "GamePad conectado" << endl;
+			}
+		}
+		// PONER el GamePad
+		if (event.type == SDL_CONTROLLERBUTTONDOWN || event.type == SDL_CONTROLLERAXISMOTION) {
+			game->input = game->inputGamePad;
+		}
+		if (event.type == SDL_KEYDOWN) {
+			game->input = game->inputKeyboard;
+		}
+		// Procesar Mando
+		if (game->input == game->inputGamePad) {  // gamePAD
+			gamePadToControls(event);
+		}
+		if (game->input == game->inputKeyboard) {
+			keysToControls(event);
+		}
 	}
 	//procesar controles
 	if (controlContinue) {
@@ -127,42 +197,48 @@ void GameLayer::processControls() {
 	}
 
 	// Disparar
-	if (controlShoot && !pause) {
-		Projectile* newProjectile = player->shoot();
-		if (newProjectile != NULL) {
-			projectiles.push_back(newProjectile);
+	if (controlMove == 0 && controlRotate == 0) {
+		if (controlShoot && !pause) {
+			Projectile* newProjectile = player->shoot();
+			if (newProjectile != NULL) {
+				projectiles.push_back(newProjectile);
+			}
+			textAmmo->content = "Municion: " + to_string(player->ammo);
 		}
-		textAmmo->content = "Municion: " + to_string(player->ammo);
-	}
 
-	if (controlMine && !pause) {
-		Mine* newMine = player->mine();
-		if (newMine != NULL) {
-			minas.push_back(newMine);
+		if (controlMine && !pause) {
+			Mine* newMine = player->mine();
+			if (newMine != NULL) {
+				minas.push_back(newMine);
+			}
+			textMines->content = "Minas: " + to_string(player->mines);
 		}
-		textMines->content = "Minas: " + to_string(player->mines);
 	}
 
 	// Mover
-	if (controlMove > 0) {
-		player->move(1);
-	}
-	else if (controlMove < 0) {
-		player->move(-1);
-	}
-	else {
-		player->move(0);
+	if (controlRotate == 0) {
+		if (controlMove > 0) {
+			player->move(1);
+		}
+		else if (controlMove < 0) {
+			player->move(-1);
+		}
+		else {
+			player->move(0);
+		}
 	}
 
 	// Rotar
-	if (controlRotate > 0) {
-		player->rotate(2);
-	}
-	else if (controlRotate < 0) {
-		player->rotate(-2);
-	}
-	else {
-		player->rotate(0);
+	if (controlMove == 0) {
+		if (controlRotate > 0) {
+			player->rotate(2);
+		}
+		else if (controlRotate < 0) {
+			player->rotate(-2);
+		}
+		else {
+			player->rotate(0);
+		}
 	}
 
 }

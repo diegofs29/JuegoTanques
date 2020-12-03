@@ -13,7 +13,9 @@ public:
 	void processControls() override;
 	void keysToControls(SDL_Event event);
 	void mouseToControls(SDL_Event event);
+	void gamePadToControls(SDL_Event event);
 
+	SDL_GameController* gamePad; // Mando
 	bool controlContinue;
 	Background* background;
 	Actor* button;

@@ -25,6 +25,7 @@ public:
 	void update() override;
 	void draw() override;
 	void keysToControls(SDL_Event event);
+	void gamePadToControls(SDL_Event event); // USO DE GAMEPAD
 	void loadMap(string name);
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
@@ -47,6 +48,7 @@ public:
 	Player* player;
 	Space* space;
 	Actor* message;
+	SDL_GameController* gamePad;
 
 	bool pause;
 	bool controlContinue = false;
