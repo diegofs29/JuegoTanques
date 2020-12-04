@@ -10,6 +10,8 @@ Player::Player(float x, float y, float angle, Game* game)
 	aRotatingRight = new Animation("res/playerRight.png", width, height, 576, 80, 1, 8, true, game);
 
 	aShooting = new Animation("res/playerShot.png", width, height, 360, 80, 1, 5, false, game);
+
+	audioShoot = new Audio("res/disparo.wav", false);
 }
 
 void Player::update() {
@@ -94,6 +96,7 @@ void Player::cambiarEstadoRotacion(int angle) {
 
 Projectile* Player::shoot() {
 	if (shootTime == 0 && ammo > 0) {
+		audioShoot->play();
 		ammo > 0 ? ammo-- : ammo = 0;
 		aShooting->currentFrame = 0;
 		state = game->stateShooting;

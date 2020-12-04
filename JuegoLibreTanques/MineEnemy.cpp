@@ -15,6 +15,8 @@ MineEnemy::MineEnemy(float x, float y, int angle, Game* game) :
 	rotateTime = rotateMoment;
 
 	timeMine = cadenceMine;
+
+	audioShoot = new Audio("res/disparo.wav", false);
 }
 
 void MineEnemy::update() {
@@ -87,6 +89,7 @@ void MineEnemy::update() {
 
 Projectile* MineEnemy::shoot() {
 	if (shootTime == 0) {
+		audioShoot->play();
 		aShooting->currentFrame = 0;
 		state = game->stateShooting;
 		shootTime = shootCadence;

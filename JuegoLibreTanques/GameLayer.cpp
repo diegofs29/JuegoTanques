@@ -18,6 +18,9 @@ GameLayer::GameLayer(Game* game)
 }
 
 void GameLayer::init() {
+	audioBackground = new Audio("res/background.mp3", true);
+	audioBackground->play();
+
 	space = new Space();
 
 	scrollX = 0;
@@ -37,7 +40,7 @@ void GameLayer::init() {
 	textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.04, game);
 	textPoints->content = "Puntos: " + to_string(points);
 	
-	loadMap("res/2.txt");
+	loadMap("res/" + to_string(game->currentLevel) + ".txt");
 	
 	textAmmo = new Text("hola", WIDTH * 0.08, HEIGHT * 0.04, game);
 	textAmmo->content = "Municion: " + to_string(player->ammo);
@@ -341,10 +344,10 @@ void GameLayer::update() {
 
 	//Nivel superado
 	if (enemigos.size() == 0) {
-		//game->currentLevel++;
-		//if (game->currentLevel > game->finalLevel) {
-			//game->currentLevel = 0;
-		//}
+		game->currentLevel++;
+		if (game->currentLevel > game->finalLevel) {
+			game->currentLevel = 0;
+		}
 		message = new Actor("res/gameSuccess.png", WIDTH * 0.5, HEIGHT * 0.5,
 			WIDTH, HEIGHT, game);
 		pause = true;

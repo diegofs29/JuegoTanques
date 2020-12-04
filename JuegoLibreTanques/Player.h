@@ -4,6 +4,7 @@
 #include "Projectile.h"
 #include "Animation.h"
 #include "Mine.h"
+#include "Audio.h"
 
 class Player : public Actor
 {
@@ -24,6 +25,7 @@ public:
 	int mineTime = 0;
 	int state;
 
+	Audio* audioShoot;
 	Animation* aMovingForward;
 	Animation* aMovingBackward;
 	Animation* aRotatingLeft;

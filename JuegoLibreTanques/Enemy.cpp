@@ -10,6 +10,8 @@ Enemy::Enemy(string file, float x, float y, int width, int height, int angle, Ga
 	this->velocity = velocity;
 
 	state = game->stateIdle;
+
+	audioShoot = new Audio("res/disparo.wav", false);
 }
 
 void Enemy::update() {
@@ -136,6 +138,7 @@ bool Enemy::checkSpeed() {
 
 Projectile* Enemy::shoot() {
 	if (shootTime == 0) {
+		audioShoot->play();
 		aShooting->currentFrame = 0;
 		state = game->stateShooting;
 		shootTime = shootCadence;

@@ -3,6 +3,7 @@
 #include "Animation.h"
 #include "Projectile.h"
 #include "Mine.h"
+#include "Audio.h"
 
 class Enemy :
     public Actor
@@ -30,7 +31,7 @@ public:
     float realvx;
     float realvy;
 
-
+    Audio* audioShoot;
     Animation* aMovingForward;
     Animation* aMovingBackward;
     Animation* aRotatingLeft;

@@ -11,6 +11,7 @@
 #include "Text.h"
 #include "Municion.h"
 #include "Bonus.h"
+#include "Audio.h" 
 
 #include <list>
 #include <fstream> // Leer ficheros
@@ -44,6 +45,7 @@ public:
 	list<Municion*> ammos;
 	list<Bonus*> bonuses;
 
+	Audio* audioBackground;
 	Background* background;
 	Player* player;
 	Space* space;
