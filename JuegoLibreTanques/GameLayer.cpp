@@ -202,57 +202,58 @@ void GameLayer::processControls() {
 	}
 
 	// Disparar
-	if (controlMove == 0 && controlRotate == 0) {
-		if (controlShoot && !pause) {
-			Projectile* newProjectile = player->shoot();
-			if (newProjectile != NULL) {
-				projectiles.push_back(newProjectile);
-				space->addDynamicActor(newProjectile);
+	if (!pause) {
+		if (controlMove == 0 && controlRotate == 0) {
+			if (controlShoot && !pause) {
+				Projectile* newProjectile = player->shoot();
+				if (newProjectile != NULL) {
+					projectiles.push_back(newProjectile);
+					space->addDynamicActor(newProjectile);
+				}
+				textAmmo->content = "Municion: " + to_string(player->ammo);
 			}
-			textAmmo->content = "Municion: " + to_string(player->ammo);
-		}
 
-		if (controlMine && !pause) {
-			Mine* newMine = player->mine();
-			if (newMine != NULL) {
-				minas.push_back(newMine);
+			if (controlMine && !pause) {
+				Mine* newMine = player->mine();
+				if (newMine != NULL) {
+					minas.push_back(newMine);
+				}
+				textMines->content = "Minas: " + to_string(player->mines);
 			}
-			textMines->content = "Minas: " + to_string(player->mines);
+		}
+
+		// Mover
+		if (!rotating) {
+			if (controlMove > 0) {
+				moving = true;
+				player->move(1);
+			}
+			else if (controlMove < 0) {
+				moving = true;
+				player->move(-1);
+			}
+			else {
+				moving = false;
+				player->move(0);
+			}
+		}
+
+		// Rotar
+		if (!moving) {
+			if (controlRotate > 0) {
+				rotating = true;
+				player->rotate(2);
+			}
+			else if (controlRotate < 0) {
+				rotating = true;
+				player->rotate(-2);
+			}
+			else {
+				rotating = false;
+				player->rotate(0);
+			}
 		}
 	}
-
-	// Mover
-	if (!rotating) {
-		if (controlMove > 0) {
-			moving = true;
-			player->move(1);
-		}
-		else if (controlMove < 0) {
-			moving = true;
-			player->move(-1);
-		}
-		else {
-			moving = false;
-			player->move(0);
-		}
-	}
-
-	// Rotar
-	if (!moving) {
-		if (controlRotate > 0) {
-			rotating = true;
-			player->rotate(2);
-		}
-		else if (controlRotate < 0) {
-			rotating = true;
-			player->rotate(-2);
-		}
-		else {
-			rotating = false;
-			player->rotate(0);
-		}
-	}
-
 }
 
 void GameLayer::loadMap(string name) {
