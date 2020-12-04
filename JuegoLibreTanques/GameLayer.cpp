@@ -440,10 +440,6 @@ void GameLayer::update() {
 	}
 
 	for (auto const& projectile : projectiles) {
-		cout << projectile->vx;
-		cout << " ";
-		cout << projectile->realVx << endl;
-
 		if (projectile->isInRender(scrollX) == false 
 			|| projectile->vx != projectile->realVx || projectile->vy != projectile->realVy) {
 			bool pInList = std::find(deleteProjectiles.begin(),
