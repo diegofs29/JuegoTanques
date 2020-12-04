@@ -52,6 +52,8 @@ public:
 	Actor* message;
 	SDL_GameController* gamePad;
 
+	bool moving = false;
+	bool rotating = false;
 	bool pause;
 	bool controlContinue = false;
 	bool controlMine = false;

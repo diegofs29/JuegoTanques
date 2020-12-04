@@ -5,10 +5,10 @@ Projectile::Projectile(float x, float y, int angle, Game* game) :
 	velocidad = 20;
 	realX = x;
 	realY = y;
+	calcularVelocidad();
 }
 
 void Projectile::update() {
-	calcularVelocidad();
 	realX += vx;
 	realY += vy;
 	x = realX;

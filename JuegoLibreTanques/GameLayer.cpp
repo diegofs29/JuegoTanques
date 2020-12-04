@@ -35,6 +35,8 @@ void GameLayer::init() {
 	enemigos.clear();
 	projectiles.clear();
 	minas.clear();
+	bonuses.clear();
+	ammos.clear();
 
 	points = 0;
 	textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.04, game);
@@ -205,6 +207,7 @@ void GameLayer::processControls() {
 			Projectile* newProjectile = player->shoot();
 			if (newProjectile != NULL) {
 				projectiles.push_back(newProjectile);
+				space->addDynamicActor(newProjectile);
 			}
 			textAmmo->content = "Municion: " + to_string(player->ammo);
 		}
@@ -219,27 +222,33 @@ void GameLayer::processControls() {
 	}
 
 	// Mover
-	if (controlRotate == 0) {
+	if (!rotating) {
 		if (controlMove > 0) {
+			moving = true;
 			player->move(1);
 		}
 		else if (controlMove < 0) {
+			moving = true;
 			player->move(-1);
 		}
 		else {
+			moving = false;
 			player->move(0);
 		}
 	}
 
 	// Rotar
-	if (controlMove == 0) {
+	if (!moving) {
 		if (controlRotate > 0) {
+			rotating = true;
 			player->rotate(2);
 		}
 		else if (controlRotate < 0) {
+			rotating = true;
 			player->rotate(-2);
 		}
 		else {
+			rotating = false;
 			player->rotate(0);
 		}
 	}
@@ -362,6 +371,7 @@ void GameLayer::update() {
 		Projectile* p = enemigo->shoot();
 		if (p != NULL) {
 			projectiles.push_back(p);
+			space->addDynamicActor(p);
 		}
 		Mine* m = enemigo->mine();
 		if (m != NULL) {
@@ -430,6 +440,10 @@ void GameLayer::update() {
 	}
 
 	for (auto const& projectile : projectiles) {
+		cout << projectile->vx;
+		cout << " ";
+		cout << projectile->realVx << endl;
+
 		if (projectile->isInRender(scrollX) == false 
 			|| projectile->vx != projectile->realVx || projectile->vy != projectile->realVy) {
 			bool pInList = std::find(deleteProjectiles.begin(),
@@ -527,6 +541,7 @@ void GameLayer::update() {
 
 	for (auto const& delProjectile : deleteProjectiles) {
 		projectiles.remove(delProjectile);
+		space->removeDynamicActor(delProjectile);
 		delete delProjectile;
 	}
 	deleteProjectiles.clear();

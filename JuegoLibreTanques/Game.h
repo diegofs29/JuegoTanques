@@ -44,5 +44,5 @@ public:
 	int const inputGamePad = 3;
 
 	int currentLevel = 1;
-	int finalLevel = 2;
+	int finalLevel = 6;
 };
